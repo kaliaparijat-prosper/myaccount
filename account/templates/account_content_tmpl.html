@@ -1,0 +1,17 @@
+<div class="content-area small-centered small-12 columns">
+    <pr-system-notifications data-notification-type="email-verification" data-rails-variables="railsVariables"></pr-system-notifications>
+    <pr-system-notifications data-notification-type="bank-information" data-rails-variables="railsVariables"></pr-system-notifications>
+    <pr-system-notifications data-notification-type="account-hold" data-rails-variables="railsVariables"></pr-system-notifications>
+    <pr-system-notifications data-notification-type="account-suspended" data-rails-variables="railsVariables"></pr-system-notifications>
+
+    <!-- uncomment after welcome area directive is migrated -->
+    <pr-welcome-area></pr-welcome-area>
+
+
+    <div ui-view="account-listings"></div>
+    <div ui-view="account-loans"></div>
+
+    <prosper-feature-flagged name="priorLoans" variant="new">
+        <pr-prior-loans/>
+    </prosper-feature-flagged>
+</div>

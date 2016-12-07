@@ -1,0 +1,16 @@
+<div class="row panel-secondary notification-panel {{type}}">
+    <div class="small-12 columns">
+        <div class="row">
+            <div class="small-12 columns panel-header notification-bar">
+                <div class="notification-icon"></div>
+                <div class="notification-title">
+                    <p class="notification-heading">{{heading}}</p>
+                    <p class="notification-subtext show-for-medium" ng-bind-html="subtext"></p>
+                    <p class="notification-subtext show-for-small-only" ng-show="!notificationShowMore && subtext !== '' && type !=='no-doc-required' "><a href="#" class="notification-anchor" ng-click="notificationShowMore = true">Show more</a></p>
+                    <p class="notification-subtext show-for-small-only" ng-show="notificationShowMore" ng-bind-html="subtext"></p>
+                </div>
+                <div class="notification-close" ng-show="close" ng-click="accountEventTrackerService.trackEvents('event_closed_message_banner');" onclick="$(this).closest( '.notification-panel' ).fadeOut('slow', function() {$(this).closest( '.notification-panel' ).remove(); });"></div>
+            </div>
+        </div>
+    </div>
+</div>

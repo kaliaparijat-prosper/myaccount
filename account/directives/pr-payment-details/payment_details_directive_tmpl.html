@@ -1,0 +1,49 @@
+<div class="show-for-small-only">
+    <div class="row">
+        <div class="small-12 columns payment-link text-center">
+            <a href="#" ng-click="PaymentDetailsVM.showPayment()">Show all payments</a>
+            </div>
+    </div>
+</div>
+
+<div class="show-for-medium payment-details">
+        <div class="list-payment">
+            <div class="small-12 columns text-center top-bar">
+                <a href="#" class="show-payment" ng-click="PaymentDetailsVM.showPaymentHistory();" ng-hide="showPaymentDetailsTable">Show all Payments</a>
+                <a href="#" class="hide-payment" ng-click="hideAllPayment()" ng-show="showPaymentDetailsTable">Hide all Payments</a>
+                <span class="float-right" ng-show="showPaymentDetailsTable" ng-hide="!showPaymentDetailsTable">{{PaymentDetailsVM.scheduledPayment.length + PaymentDetailsVM.results.length}} Payments</span>
+            </div>
+                <table summary="" ng-show="showPaymentDetailsTable" class="small-12 columns">
+                    <tr>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Principal</th>
+                        <th>Interest</th>
+                        <th>Status</th>
+                    </tr>
+                    <tr id="pay_{{data.payment_servicing_id}}" ng-style="data.status === 'Scheduled' ? {'background-color':'#f8f8f8' }:''" ng-repeat="data in PaymentDetailsVM.scheduledPayment">
+                        <td>{{data.effective_date |date:'MM/dd/yyyy'}}</td>
+                        <td>{{data.payment_draft_amount |formatCurrency}}</td>
+                        <td>{{'-'}}</td>
+                        <td>{{'-'}}</td>
+                        <td ng-if="(data.status === 'Cancelled'||data.status === 'Failed') " class="failed-cls">{{data.status}}</td>
+                        <td ng-show="(data.status === 'Scheduled' && !data.pending)" class="closeIcon" ng-click="PaymentDetailsVM.welcomeModal(data.payment_servicing_id,data.payment_draft_amount,data.effective_date)">{{data.status}}</td>
+
+                    </tr>
+                    <tr ng-repeat="item in PaymentDetailsVM.results">
+                        <td>{{item.payment_effective_date |date:'MM/dd/yyyy'}}</td>
+                        <td ng-class="item.status === 'Refund' ? 'refund-cls' :''">{{item.total_paid |formatCurrency}}<span ng-if="(item.late_fee)">{{' w/ '+(item.late_fee |formatCurrency)+' fee'}}</span></td>
+                        <td>{{item.principal > 0 ? (item.principal|formatCurrency) : '-'}}</td>
+                        <td ng-if="(item.status !== 'Failed')">{{item.interest > 0 ? (item.interest|formatCurrency) : '-'}}</td>
+                        <td ng-if="(item.status === 'Failed')">{{item.interest|formatCurrency}}</td>
+                        <td ng-if="item.status === 'Failed'" class="failed-cls">{{item.status}}</td>
+                        <td ng-if="item.status === 'Refund'" class="refund-cls">{{item.status}}</td>
+                        <td ng-if="(item.status === 'Success' || item.status === 'Unknown')">{{item.status === 'Unknown' ? '-' :item.status}}</td>
+                    </tr>
+                </table>
+                    <div class="small-12 columns text-center bottom-hide">
+                    <a href="#" class="hide-payment" ng-click="hideAllPayment()" ng-show="showPaymentDetailsTable">Hide all Payments</a>
+                        <span class="float-right" ng-show="showPaymentDetailsTable" ng-hide="!showPaymentDetailsTable">{{PaymentDetailsVM.scheduledPayment.length + PaymentDetailsVM.results.length}} Payments</span>
+                    </div>
+        </div>
+</div>

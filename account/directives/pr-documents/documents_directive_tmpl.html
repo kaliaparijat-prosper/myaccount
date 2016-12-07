@@ -1,0 +1,35 @@
+<div class="row panel-secondary listings">
+    <div class="small-12 columns">
+        <div class="row">
+            <div class="small-12 columns panel-header notification-bar notification-warning">
+                <div class="notification-icon"></div>
+                <div class="notification-title"><strong class="primary">Action required</strong></div>
+            </div>
+        </div>
+    </div>
+    <div class="small-12 columns documents-section panel-content">
+        <div class="row document-item" data-equalizer>
+            <div class="small-12 medium-6 columns" data-equalizer-watch>
+                <h3 class="document-sub-header">Documents required to receive funds</h3>
+                <h5 class="document-sub-caption">Upload documents below or email to <a href="mailto:approval@prosper.com">approval@prosper.com.</a></h5>
+            </div>
+            <div class="small-12 medium-6 upload-document-large columns show-for-medium" data-equalizer-watch>
+                <button class="primary float-right" ng-click="DocumentsVM.uploadDocument()">Upload documents</button>
+            </div>
+        </div>
+        <div ng-repeat='documentItem in DocumentsVM.holdsList' class="row document-item">
+            <div class="small-12 columns">
+                <div class="document-item-icon" ng-show="documentItem.showIconAndStatus"><img class='document-upload-status-icon'
+                                                     ng-src="{{documentItem.documentStatusIcon}}" alt="Action" />
+                </div>
+                <div class="document-item-title" ng-class="{ 'stretch-full-width':  !documentItem.showIconAndStatus }"><p class="{{documentItem.documentStatus}}">{{documentItem.display_message}}</p></div>
+                <div class="document-item-status right vertical-centered {{documentItem.pleaseUpload}}" ng-show="documentItem.showIconAndStatus"><span class="micro">{{documentItem.workflow_status}}</span></div>
+            </div>
+        </div>
+        <div class="row document-item document-upload-row show-for-small-only">
+            <div class="small-12 small-centered columns">
+                <button class="primary button-centered" ng-click="DocumentsVM.uploadDocument()">Upload documents</button>
+            </div>
+        </div>
+    </div>
+</div>
