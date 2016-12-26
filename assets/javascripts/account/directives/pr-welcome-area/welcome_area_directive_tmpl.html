@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="welcome-area show-for-small-only">
+        <h1 class="welcome-note">{{WelcomeVM.greeting}}</h1>
+        <div class="welcome-messages-unread" ng-hide="WelcomeVM.unreadMessages === 0">
+            <div><img class='mail-icon' ng-src="{{railsVariables.mailIcon}}" alt="Mail" /></div>
+            <div class="welcomeMessagesWrapper"><p class="unreadMessagesParagraph"><span>You have <a class='pink unreadMessagesText' href="/secure/account/common/messages.aspx" target="_self">{{WelcomeVM.unreadMessagesText}}</a></span></p></div>
+        </div>
+    </div>
+    <div class="welcome-area show-for-medium">
+        <div class="welcome-messages-unread" >
+            <div><img ng-hide="WelcomeVM.unreadMessages === 0" class='mail-icon' ng-src="{{railsVariables.mailIcon}}" alt="Mail"  /></div>
+            <div class="welcomeMessagesWrapper"><p class="unreadMessagesParagraph">{{WelcomeVM.greeting}}
+                <span ng-hide="WelcomeVM.unreadMessages === 0">You have <a class='pink unreadMessagesText' href="/secure/account/common/messages.aspx" target="_self">{{WelcomeVM.unreadMessagesText}}</a></span></p></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+
+
+<!-- uncomment after documents directive is migrated -->
+<!--
+<prosper-feature-flagged name="docUpload" variant="old" feature-flagged-default>
+    <pr-documents ng-show="ListingsVM.showDocuments"></pr-documents>
+</prosper-feature-flagged>
+-->
+
+<!-- uncomment after document upload directive is migrated -->
+
+<prosper-feature-flagged name="docUpload" variant="new">
+    <pr-document-upload ng-show="ListingsVM.showDocuments"></pr-document-upload>
+</prosper-feature-flagged>
+
+
+<pr-active-listings ng-if="ListingsVM.showActiveListing" ng-show="ListingsVM.showActiveListing"></pr-active-listings>
+<pr-draft-listings ng-show="ListingsVM.showDraftListing"></pr-draft-listings>
