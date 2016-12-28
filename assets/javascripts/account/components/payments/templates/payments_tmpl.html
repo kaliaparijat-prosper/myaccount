@@ -1,8 +1,0 @@
-<div class="divider" ng-show="PaymentsVM.loans.length > 0" ng-hide="PaymentsVM.priorLoan && !PaymentsVM.activeLoan">
-    <span class="divider-text" ng-show="PaymentsVM.loans.length === 1">YOUR LOAN</span>
-    <span class="divider-text" ng-show="PaymentsVM.loans.length > 1">YOUR LOANS</span>
-</div>
-
-<pr-payment-widget id='{{loan.number.slice(1)}}' ng-repeat="loan in PaymentsVM.loans | orderBy:'originatedDate_unformatted'" ng-if="loan.isPriorLoan !== true"></pr-payment-widget>
-<pr-pre-reg-widget></pr-pre-reg-widget>
-
