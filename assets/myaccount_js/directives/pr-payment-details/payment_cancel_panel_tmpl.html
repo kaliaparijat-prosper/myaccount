@@ -1,0 +1,45 @@
+<section>
+    <div class="row show-for-small-only">
+        <a class="close-reveal-modal float-right"  ng-click="PaymentCancelVM.cancel()"></a>
+        <div class="small-12 columns">
+            <h2>
+                Are you sure you want to cancel this payment of {{PaymentCancelVM.amount |currency:'$':0}}?
+            </h2>
+            <div class="close-modal-button"></div>
+            <div class="small-12 columns cancel-buttons">
+                <button type="submit"
+                        class="primary stretch-full-width" ng-click="PaymentCancelVM.yesContinue()">
+                    Yes, Cancel
+                </button>
+                </div>
+                <div class="small-12 columns cancel-buttons">
+                    <button type="submit"
+                        class="secondary gray stretch-full-width" ng-click="PaymentCancelVM.cancel()">
+                    No
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row show-for-medium cancel-payment">
+        <a class="close-reveal-modal float-right"  ng-click="PaymentCancelVM.cancel()"></a>
+        <div class="small-12 columns cancel-content">
+            <h2>
+                Are you sure you want to cancel this payment of {{PaymentCancelVM.amount |currency:'$':0}}?
+            </h2>
+            <div class="close-modal-button"></div>
+                <div class="small-12 columns cancel-buttons">
+
+                    <button type="submit"
+                            class="secondary gray float-left no-btn" ng-click="PaymentCancelVM.cancel()">
+                        No
+                    </button>
+
+                    <button type="submit"
+                            class="primary" ng-click="PaymentCancelVM.yesContinue()">
+                        Yes, Cancel
+                    </button>
+
+                </div>
+        </div>
+    </div>
+</section>

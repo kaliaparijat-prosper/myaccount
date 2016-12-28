@@ -1,0 +1,216 @@
+<div class="row panel-secondary notification-panel no-doc-required doc-refresh-notification" ng-show="DocumentUploadVM.docRefresh">
+  <div class="small-12 columns">
+    <div class="row">
+      <div class="small-12 columns panel-header notification-bar">
+        <div class="notification-icon"></div>
+        <div class="notification-title">
+          <p class="notification-heading">We went through your application and here's what additional documents do we need!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row panel-secondary listings">
+    <div class="small-12 columns">
+        <div class="row">
+            <div class="small-12 columns panel-header notification-bar" ng-class="{'notification-success': DocumentUploadVM.allHoldsProcessed, 'notification-checklist': !DocumentUploadVM.allHoldsProcessed};">
+                <div class="notification-icon"></div>
+                <div class="notification-title">
+                    <strong ng-if="!DocumentUploadVM.allHoldsProcessed" class="primary">Required Next Steps</strong>
+                    <strong ng-if="DocumentUploadVM.allHoldsProcessed" class="primary">Verification Complete</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="small-12 columns documents-section panel-content">
+        <div class="row document-item clearfix" data-equalizer>
+
+            <div ng-if="!DocumentUploadVM.allHoldsProcessed && !DocumentUploadVM.pendingHoldsOnly" class="small-12 columns" data-equalizer-watch>
+                <h3 class="clearfix">Help us verify who you are</h3>
+                <h5 class="clearfix document-sub-caption">Complete all verification steps below</h5>
+            </div>
+
+            <div ng-if="DocumentUploadVM.pendingHoldsOnly" class="small-12 columns" data-equalizer-watch>
+              <h3 class="clearfix">Please wait, we're reviewing your uploads</h3>
+            </div>
+
+            <div ng-if="DocumentUploadVM.allHoldsProcessed" class="small-12 columns" data-equalizer-watch>
+                    <h3 class="clearfix thank-you-message">Thank you {{DocumentUploadVM.user.personal_info.first_name}}, you're done</h3>
+            </div>
+
+        </div>
+
+        <accordion close-others="oneAtATime" class="accordion-custom">
+            <accordion-group ng-repeat="documentCategory in DocumentUploadVM.documentCategories track by documentCategory.sorting_id" ng-if="documentCategory.document_types.length > 0 && documentCategory.status.name !== 'Done'" is-open="documentCategory.isOpen">
+              <a name="{{documentCategory.sorting_id}}" class="scroll-position"></a>
+                <accordion-heading>
+                        <span class="document-category-type">{{documentCategory.type}}</span><br/>
+                        <span ng-if="documentCategory.status.name === 'Take action now'">
+                            <span class="icon-rejection" ng-if="documentCategory.status.name === 'Take action now'"></span>
+                            <span class="document-status-rejection">{{documentCategory.status.name}}</span>
+                        </span>
+                        <span ng-if="documentCategory.status.name === 'Pending review'">
+                            <span class="icon-pending" ng-if="documentCategory.status.name === 'Pending review'"></span>
+                            <span class="document-status-pending">{{documentCategory.status.name}}</span>
+                        </span>
+                        <span ng-if="documentCategory.status.name === 'Submit a new document'">
+                            <span class="icon-not-submitted" ng-if="documentCategory.status.name === 'Submit a new document'"></span>
+                            <span class="document-status-not-submitted">{{documentCategory.status.name}}</span>
+                        </span>
+                </accordion-heading>
+
+                <div class="additional-document-explainer" ng-if="documentCategory.is_additional_document">
+                    {{documentCategory.additional_document_explainer}}
+                </div>
+
+                <div ng-repeat="documentType in documentCategory.document_types track by $index" ng-if="documentType.documents.length > 0 && documentCategory.status.name !== 'Done'">
+
+                    <div class="document-view-container" ng-repeat="document in documentType.documents">
+
+                        <div class="clearfix">
+                            <div class="thumbnail-box" ng-class="{'rejected': document.status.name == 'Rejected'}">
+                                <div class="inner-box">
+                                    <span ng-if="document.status.name === 'Rejected'">
+                                        Submission <br/> Declined
+                                    </span>
+                                    <span ng-if="document.status.name !== 'Rejected'">
+                                        Document <br/> Received
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="file-details">
+                                <span class="detail-label">Type:</span> <span class="file-detail detail-description-type">{{document.type.name}}</span><br/>
+                                <span class="detail-label">File:</span> <span class="file-detail show-for-small-only detail-description">{{ document.file_name.substring(0,8) }} ~  {{ document.file_name.substring(document.file_name.length - 8) }}</span>
+                                                                <span class="file-detail show-for-medium detail-description">{{document.file_name}}</span>
+                            </div>
+
+                          <div class="rejected-note" ng-if="document.quality_reasons.length > 0">
+                            <div><strong>Why do I need to resubmit?</strong></div>
+                            <div>
+                              <p class="note-text" ng-repeat="reason in document.quality_reasons">
+                                  {{reason}}
+                              </p>
+                            </div>
+                          </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <a href="" ng-click="DocumentUploadVM.toggleFormVisibility(documentCategory.sorting_id)" ng-if="documentCategory.status.name === 'Pending review'" class="pink add-document-link">
+                    <span ng-hide="DocumentUploadVM['showFormFor_' + documentCategory.sorting_id]">+</span>
+                    <span ng-show="DocumentUploadVM['showFormFor_' + documentCategory.sorting_id]">- </span>
+                    Add another document</a>
+
+                <form name="frm_doc_upload" ng-if="documentCategory.status.name !== 'Pending review' || DocumentUploadVM['showFormFor_' + documentCategory.sorting_id]">
+                    <div class="add-document-intro-text" ng-if="documentCategory.document_types.length > 1 && !(documentCategory.is_additional_document)">
+                        What are you submitting?<br/>
+                        <span class="add-document-intro-text-line-2">Only 1 type required.</span>
+
+                    </div>
+                    <div class="add-document-intro-text" ng-if="documentCategory.document_types.length <= 1 && !(documentCategory.is_additional_document)">
+                        Submit following document
+                    </div>
+
+                    <ul class="document-type-select-list" ng-hide="documentCategory.is_additional_document">
+                        <li ng-repeat="documentType in documentCategory.document_types | unique:'type'">
+                            <input type="radio" id="docType_{{documentType.type.id}}" name="docTypeFor_{{documentCategory.sorting_id}}" ng-model="DocumentUploadVM['docTypeFor_' + documentCategory.sorting_id]" value="{{documentType.type.id}}" ng-checked="DocumentUploadVM['docTypeFor_' + documentCategory.sorting_id] == documentType.type.id" />
+                            <label for="docType_{{documentType.type.id}}" ng-click="DocumentUploadVM.toggleRadio(documentCategory.sorting_id, documentType.type.id)">{{documentType.type.name}}</label>
+                        </li>
+                    </ul>
+
+                    <div class="add-document-button-container">
+                        <button type="file" capture="camera" ngf-accept="'application/pdf,image/png,image/jpg,image/bmp,image/gif,image/tif,image/tiff,image/jpeg'"
+                                ngf-pattern="'application/pdf,image/png,image/jpg,image/bmp,image/gif,image/tif,image/tiff,image/jpeg'"
+                                ngf-select="DocumentUploadVM.uploadFiles($file, documentCategory.id, DocumentUploadVM['docTypeFor_' + documentCategory.sorting_id], $invalidFiles, $index, documentCategory.sorting_id)"
+                                ngf-max-size="DocumentUploadVM.docUploadSize" id="{{documentCategory.sorting_id}}" class="file-upload-form-field" />
+                        <label class="add-document-box" for="{{documentCategory.sorting_id}}">
+
+                            <div class="add-document-label" ng-if="documentCategory.uploading === false">
+                                <!--Added this tag to fix qa automation script -->
+                                <input type="file" id="inputType_{{documentCategory.sorting_id}}" data-q="{{documentCategory.sorting_id}}" class="hide">
+                                + Add Document
+                                <br/>
+                                <span class="tap-hint show-for-small-only">Take photo or browse files</span>
+                              <span class="tap-hint show-for-medium">Click to browse files</span>
+                            </div>
+
+                            <div class="add-document-label no-icon" ng-if="documentCategory.uploading === true">
+                                <div class="
+                                spinner"></div>
+                                <span class="tap-hint">Uploading</span>
+                            </div>
+
+
+
+                        </label>
+
+                        <!-- show only if errors -->
+                        <div class="add-document-file-info" ng-if="DocumentUploadVM['uploadErrorsFor_' + documentCategory.sorting_id]">
+                            <div class="add-document-error-msg" ng-if="DocumentUploadVM['uploadErrorsFor_'+ documentCategory.sorting_id].$error == 'maxSize'">
+                                <span class="add-document-error-msg-1">ERROR: File size exceeded</span><br/>
+                                <span class="add-document-error-msg-2">You attempted to upload a document that exceeds our {{DocumentUploadVM.docUploadSize}} size limit. Resize your image/file and try submitting again.</span>
+                            </div>
+                            <div class="add-document-error-msg" ng-if="DocumentUploadVM['uploadErrorsFor_'+ documentCategory.sorting_id].$error == 'pattern'">
+                                <span class="add-document-error-msg-1">ERROR: File type not supported</span><br/>
+                                <span class="add-document-error-msg-2">We accept the following file formats: PDF, JPG, JPEG, TIF, TIFF, BMP, PNG, and GIF. Submit the document in a supported format.</span>
+                            </div>
+                            <div class="add-document-error-msg" ng-if="DocumentUploadVM['uploadErrorsFor_'+ documentCategory.sorting_id].$error == 'serverError'">
+                                <span class="add-document-error-msg-1">ERROR: Something went wrong</span><br/>
+                                <span class="add-document-error-msg-2">Try submitting again later.</span>
+                            </div>
+                            <div class="add-document-error-msg" ng-if="DocumentUploadVM['uploadErrorsFor_'+ documentCategory.sorting_id].$error == 'duplicateFileNameError'">
+                              <span class="add-document-error-msg-1">ERROR: Duplicate file name</span><br/>
+                              <span class="add-document-error-msg-2">DocumentUploadVM['uploadErrorsFor_'+ documentCategory.sorting_id].message</span>
+                            </div>
+                            Type: <span class="file-detail">{{DocumentUploadVM.documentCategoryForId(DocumentUploadVM['docTypeFor_' + documentCategory.sorting_id]).type.name}}</span><br/>
+                            File: <span class="file-detail">{{ DocumentUploadVM['uploadErrorsFor_' + documentCategory.sorting_id].name }}</span>
+
+                        </div>
+
+
+                        <!-- show only if uploading -->
+                        <div class="add-document-file-info" ng-if="documentCategory.uploading === true">
+                            Type: <span class="file-detail">{{DocumentUploadVM.documentCategoryForId(DocumentUploadVM['docTypeFor_' + documentCategory.sorting_id]).type.name}}</span><br/>
+                            File: <span class="file-detail">{{ DocumentUploadVM.f.name }}</span>
+                        </div>
+
+
+                    </div>
+
+                    <ul class="add-document-upload-tips">
+                       <li ng-repeat="uploadTip in DocumentUploadVM.documentCategoryForId(DocumentUploadVM['docTypeFor_' + documentCategory.sorting_id]).uploadTips.tips">{{uploadTip}}</li>
+                    </ul>
+
+                </form>
+            </accordion-group>
+        </accordion>
+        <div class="document-view-container-inactive" ng-repeat="documentCategory in DocumentUploadVM.documentCategories" ng-if="documentCategory.document_types.length > 0 && documentCategory.status.name === 'Done'">
+            <div class="document-view-header-inactive" ng-if="documentCategory.status.name === 'Done'">
+                <span class="document-category-type">{{documentCategory.type}}</span><br/>
+                <span class="document-status-done">{{documentCategory.status.name}}</span>
+            </div>
+        </div>
+
+        <div class="row document-item clearfix upload-tips" data-equalizer>
+
+            <div class="small-12 columns upload-tips-header">
+                Uploads are secure. <a href="" class="action-link" ng-click="showTips = !showTips">{{!showTips?'View tips.':'Hide tips.'}}</a>
+            </div>
+
+            <div class="small-12 columns upload-tips-copy-container" ng-if="showTips == true" data-equalizer-watch>
+
+                <p>Please upload a photo or scan of each document as an individual file. A PDF containing more than one document type such as Government ID, Utility Bill and W2 are discouraged and take more processing time.</p><br/>
+                <p>Each submission must be clear, legible and {{DocumentUploadVM.docUploadSize}} or less in file size.</p><br/>
+                <p>We accept the following file formats: PDF, JPG, JPEG, TIF, TIFF, BMP, PNG, and GIF.</p><br/>
+                <p>Have questions, having problems?</p><br/>
+                <p><a target="_blank" class="pink" href="http://help.prosper.com">See our Help Center</a></p><br/>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>

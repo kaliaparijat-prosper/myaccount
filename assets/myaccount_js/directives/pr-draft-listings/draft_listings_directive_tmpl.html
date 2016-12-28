@@ -1,0 +1,76 @@
+<div class="row drafts-section panel-secondary" ng-if="DraftListingVM.info.draftListingLevel === 1">
+    <div class="small-12 columns panel-content">
+        <div class="row">
+            <div class="small-12 mediumlarge-7 columns" >
+                <div class="row">
+                    <div class="small-12 columns draft-listing-title">
+                        <h3>Still need {{::DraftListingVM.info.loan_amount | currency:"$":0}} for {{::DraftListingVM.info.title | lowercase}}?</h3>
+                    </div>
+                    <div class="small-12 columns">
+                        <p class="draft-listing-description">Your application is almost finished. Go ahead and pick up where you left off.</p>
+                    </div>
+                    <div class="small-12 columns text-center">
+                        <button class="primary show-for-small hide-for-mediumlarge" data-m="button-user-finishes-application" data-q="finishBtn1" data-pax-event-type="click" data-pax-name="MYACCOUNT:Overview:Finish Application CTA:Clicked"  ng-click="accountEventTrackerService.trackEvents('event_user_finishes_application');completeListing()">Finish application</button>
+                    </div>
+                    <div class="small-12 show-for-small hide-for-mediumlarge text-center columns ng-hide">
+                        <a href="#" class="withdraw-draft-listing">No, thanks. I'm no longer interested.</a>
+                    </div>
+                </div>
+            </div>
+            <div class="small-12 mediumlarge-5 show-for-mediumlarge columns" >
+                <div class="row">
+                    <div class="small-12 text-center mediumlarge-text-right columns">
+                        <button class="primary" data-m="button-user-finishes-application" data-pax-event-type="click"  data-q="finishBtn2" data-pax-name="MYACCOUNT:Overview:Finish Application CTA:Clicked" ng-click="accountEventTrackerService.trackEvents('event_user_finishes_application');completeListing()">Finish application</button>
+                    </div>
+                </div>
+            </div>
+            <div class="small-12 float-left show-for-mediumlarge column ng-hide">
+                <a href="#" class="withdraw-draft-listing">No, thanks. I'm no longer interested.</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row drafts-section panel-secondary" ng-if="DraftListingVM.info.draftListingLevel === 2">
+    <div class="small-12 columns panel-content">
+        <div class="row">
+            <div class="small-12 columns" >
+                <div class="row">
+                    <div class="small-12 columns draft-listing-title">
+                        <h2>Still need {{::DraftListingVM.info.loan_amount | currency:"$":0}} for {{::DraftListingVM.info.title | lowercase}}?</h2>
+                    </div>
+                    <div class="small-12 columns">
+                        <p class="draft-listing-description">Your offer is still available. Finish your application to lock in your rate.</p>
+                    </div>
+                </div>
+                <div class="row listing-details">
+                    <div class="small-12 mediumlarge-7 columns listing-details-wrapper">
+                        <ul class="draft-listings-info">
+                            <li class="make-inline-block">
+                                <p class="disclaimer">PAYMENT</p>
+                                <h4>{{::DraftListingVM.info.monthly_payment | currency}}</h4>
+                            </li>
+                            <li class="make-inline-block">
+                                <p class="disclaimer">RATE</p>
+                                <h4>{{::DraftListingVM.info.current_rate | number : 2}}%</h4>
+                            </li>
+                            <li class="make-inline-block">
+                                <p class="disclaimer">TERM</p>
+                                <h4>{{::DraftListingVM.info.funding_term}}<span class="micro">&nbsp;Months</span></h4>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                    <div class="small-12 text-center mediumlarge-text-right mediumlarge-5 columns">
+                        <button class="primary" data-m="button-user-finishes-application" ng-click="accountEventTrackerService.trackEvents('event_user_finishes_application');completeListing()">Finish application</button>
+                    </div>
+
+                    <div class="small-12 float-left columns ng-hide">
+                        <a href="#" class="withdraw-draft-listing">No, thanks. I'm no longer interested.</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

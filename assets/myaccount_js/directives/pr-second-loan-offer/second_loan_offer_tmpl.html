@@ -1,0 +1,30 @@
+<div class="row drafts-section panel-secondary" ng-if="SecondLoanOfferVM.loanEligibility">
+    <div class="small-12 columns panel-content">
+        <div class="row">
+            <div class="small-12 medium-7 columns" >
+                <div class="row">
+                    <div class="small-12 columns draft-listing-title">
+                        <h3>Good news, you're eligible for another loan</h3>
+                    </div>
+                    <div class="small-12 columns ">
+                        <p class="draft-listing-description">Borrow up to {{SecondLoanOfferVM.eligibleAmount}} more through Prosper.</p>
+                        <button class="primary show-for-small-only" data-m="button-user-applies-for-new-loan" ng-click="accountEventTrackerService.trackEvents('event_user_applies_for_new_loan');applyNow()">Apply now</button>
+                    </div>
+                    <div class="small-12 show-for-small-only text-center columns ng-hide">
+                        <a href="#" class="withdraw-draft-listing" data-m="button-user-not-interested-new-loan" ng-click="accountEventTrackerService.trackEvents('event_user_not_interested_new_loan);">No, thanks. I'm no longer interested.</a>
+                    </div>
+                </div>
+            </div>
+            <div class="small-12 medium-5 show-for-medium columns" >
+                <div class="row">
+                    <div class="small-12 columns">
+                        <button class="primary right" data-m="button-user-applies-for-new-loan" ng-click="accountEventTrackerService.trackEvents('event_user_applies_for_new_loan');applyNow()">Apply now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="small-12 float-left show-for-medium column ng-hide">
+                <a href="#" class="withdraw-draft-listing" data-m="button-user-not-interested-new-loan" ng-click="accountEventTrackerService.trackEvents('event_user_not_interested_new_loan);">No, thanks. I'm no longer interested.</a>
+            </div>
+        </div>
+    </div>
+</div>
